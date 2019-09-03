@@ -55,6 +55,7 @@ public class RedundantTypeCastCheck extends IssuableSubscriptionVisitor {
 
   @Override
   public void visitNode(Tree tree) {
+    org.sonar.java.model.JavaTree.useOldSema(context.getTree(), () -> {
     if(!hasSemantic()) {
       return;
     }
@@ -69,6 +70,7 @@ public class RedundantTypeCastCheck extends IssuableSubscriptionVisitor {
     if (target != null && (isRedundantNumericalCast(cast, expressionType) || isUnnecessarySubtypeCast(expressionType, typeCastTree, target))) {
       reportIssue(typeCastTree.type(), "Remove this unnecessary cast to \"" + cast + "\".");
     }
+    });
   }
 
   private static boolean requiredForMemberAccess(TypeCastTree typeCastTree) {

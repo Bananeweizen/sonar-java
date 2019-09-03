@@ -40,12 +40,14 @@ public class PrimitiveWrappersInTernaryOperatorCheck extends IssuableSubscriptio
 
   @Override
   public void visitNode(Tree tree) {
+    org.sonar.java.model.JavaTree.useOldSema(context.getTree(), () -> {
     ConditionalExpressionTree cet = (ConditionalExpressionTree) tree;
     Type trueExpressionType = cet.trueExpression().symbolType();
     Type falseExpressionType = cet.falseExpression().symbolType();
     if (dissimilarPrimitiveTypeWrappers(trueExpressionType, falseExpressionType)) {
       reportIssue(cet.questionToken(), "Add an explicit cast to match types of operands.");
     }
+    });
   }
 
   private static boolean dissimilarPrimitiveTypeWrappers(Type trueExprType, Type falseExprType) {

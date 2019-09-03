@@ -83,6 +83,7 @@ public class ControllingPermissionsCheck extends IssuableSubscriptionVisitor {
 
   @Override
   public void visitNode(Tree tree) {
+    org.sonar.java.model.JavaTree.useOldSema(tree, () -> {
     if (!hasSemantic()) {
       return;
     }
@@ -105,6 +106,7 @@ public class ControllingPermissionsCheck extends IssuableSubscriptionVisitor {
         // do nothing - not subscribed
         break;
     }
+    });
   }
 
   private void handleMethodTree(MethodTree tree) {

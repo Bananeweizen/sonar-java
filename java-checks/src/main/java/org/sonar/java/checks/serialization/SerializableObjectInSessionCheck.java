@@ -27,6 +27,7 @@ import org.sonar.java.resolve.ParametrizedTypeJavaType;
 import org.sonar.plugins.java.api.semantic.Type;
 import org.sonar.plugins.java.api.tree.ExpressionTree;
 import org.sonar.plugins.java.api.tree.MethodInvocationTree;
+import org.sonar.plugins.java.api.tree.Tree;
 
 import java.util.Collections;
 import java.util.List;
@@ -34,6 +35,12 @@ import java.util.List;
 @Rule(key = "S2441")
 public class SerializableObjectInSessionCheck extends AbstractMethodDetection {
 
+  @Override
+  public void visitNode(Tree tree) {
+    org.sonar.java.model.JavaTree.useOldSema(context.getTree(), () -> {
+      super.visitNode(tree);
+    });
+  }
 
   @Override
   protected List<MethodMatcher> getMethodInvocationMatchers() {

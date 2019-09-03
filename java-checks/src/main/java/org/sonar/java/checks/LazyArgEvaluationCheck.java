@@ -207,11 +207,13 @@ public class LazyArgEvaluationCheck extends BaseTreeVisitor implements JavaFileS
 
   @Override
   public void scanFile(JavaFileScannerContext context) {
+    org.sonar.java.model.JavaTree.useOldSema(context.getTree(), () -> {
     this.context = context;
     if (context.getSemanticModel() == null) {
       return;
     }
     scan(context.getTree());
+    });
   }
 
   @Override

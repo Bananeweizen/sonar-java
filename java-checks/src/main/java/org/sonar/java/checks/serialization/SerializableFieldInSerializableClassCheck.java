@@ -51,6 +51,7 @@ public class SerializableFieldInSerializableClassCheck extends IssuableSubscript
 
   @Override
   public void visitNode(Tree tree) {
+    org.sonar.java.model.JavaTree.useOldSema(tree, () -> {
     if(!hasSemantic()) {
       return;
     }
@@ -64,6 +65,7 @@ public class SerializableFieldInSerializableClassCheck extends IssuableSubscript
         }
       }
     }
+    });
   }
 
   private void checkVariableMember(VariableTree variableTree) {

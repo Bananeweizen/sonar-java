@@ -38,6 +38,7 @@ public class CompareToNotOverloadedCheck extends IssuableSubscriptionVisitor {
 
   @Override
   public void visitNode(Tree tree) {
+    org.sonar.java.model.JavaTree.useOldSema(context.getTree(), () -> {
     MethodTree methodTree = (MethodTree) tree;
     if (hasSemantic() && isCompareToMethod(methodTree) && Boolean.FALSE.equals(methodTree.isOverriding())) {
       ClassJavaType ownerType = (ClassJavaType) methodTree.symbol().owner().type();
@@ -51,6 +52,7 @@ public class CompareToNotOverloadedCheck extends IssuableSubscriptionVisitor {
           reportIssue(methodTree.parameters().get(0), "Refactor this method so that its argument is of type '" + name + "'.");
         });
     }
+    });
   }
 
   private static boolean isCompareToMethod(MethodTree tree) {

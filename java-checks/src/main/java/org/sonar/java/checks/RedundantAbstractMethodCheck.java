@@ -45,6 +45,7 @@ public class RedundantAbstractMethodCheck extends IssuableSubscriptionVisitor {
 
   @Override
   public void visitNode(Tree tree) {
+    org.sonar.java.model.JavaTree.useOldSema(context.getTree(), () -> {
     if (!hasSemantic()) {
       return;
     }
@@ -52,6 +53,7 @@ public class RedundantAbstractMethodCheck extends IssuableSubscriptionVisitor {
     if (method.isAbstract() && method.owner().isAbstract()) {
       checkMethod((JavaSymbol.MethodJavaSymbol) method);
     }
+    });
   }
 
   private void checkMethod(JavaSymbol.MethodJavaSymbol method) {

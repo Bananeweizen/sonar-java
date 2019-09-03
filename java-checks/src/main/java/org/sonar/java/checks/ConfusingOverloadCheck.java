@@ -45,6 +45,7 @@ public class ConfusingOverloadCheck extends IssuableSubscriptionVisitor {
 
   @Override
   public void visitNode(Tree tree) {
+    org.sonar.java.model.JavaTree.useOldSema(context.getTree(), () -> {
     if (!hasSemantic()) {
       return;
     }
@@ -62,6 +63,7 @@ public class ConfusingOverloadCheck extends IssuableSubscriptionVisitor {
         }
       }
     }
+    });
   }
 
   private boolean checkStaticMethod(Tree reportTree, Symbol.MethodSymbol methodSymbol, Type superClass) {

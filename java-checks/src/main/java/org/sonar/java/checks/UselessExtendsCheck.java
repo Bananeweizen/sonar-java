@@ -50,6 +50,7 @@ public class UselessExtendsCheck extends IssuableSubscriptionVisitor {
 
   @Override
   public void visitNode(Tree tree) {
+    org.sonar.java.model.JavaTree.useOldSema(context.getTree(), () -> {
     if (!hasSemantic()) {
       return;
     }
@@ -74,6 +75,7 @@ public class UselessExtendsCheck extends IssuableSubscriptionVisitor {
         checkRedundancy(superInterface, superInterfacesTypes, superTypes);
       }
     }
+    });
   }
 
   private void checkExtendsObject(ClassTree classTree) {

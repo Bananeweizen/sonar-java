@@ -57,9 +57,11 @@ public class AnonymousClassShouldBeLambdaCheck extends BaseTreeVisitor implement
 
   @Override
   public void scanFile(JavaFileScannerContext context) {
+    org.sonar.java.model.JavaTree.useOldSema(context.getTree(), () -> {
     this.context = context;
     enumConstants = new ArrayList<>();
     scan(context.getTree());
+    });
   }
 
   @Override

@@ -54,6 +54,7 @@ public class EnumSetCheck extends IssuableSubscriptionVisitor {
 
   @Override
   public void visitNode(Tree tree) {
+    org.sonar.java.model.JavaTree.useOldSema(context.getTree(), () -> {
     if (!hasSemantic()) {
       return;
     }
@@ -74,6 +75,7 @@ public class EnumSetCheck extends IssuableSubscriptionVisitor {
       }
     }
     checkIssue(initializer.symbolType(), initializer, variableTree.type());
+    });
   }
 
   private void checkIssue(Type type, Tree reportTree, TypeTree typeTree) {

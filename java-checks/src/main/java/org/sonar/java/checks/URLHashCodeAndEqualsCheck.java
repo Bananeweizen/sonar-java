@@ -50,6 +50,7 @@ public class URLHashCodeAndEqualsCheck extends IssuableSubscriptionVisitor {
 
   @Override
   public void visitNode(Tree tree) {
+    org.sonar.java.model.JavaTree.useOldSema(context.getTree(), () -> {
     if (tree.is(Tree.Kind.VARIABLE)) {
       VariableTree variableTree = (VariableTree) tree;
       if (variableTree.initializer() != null) {
@@ -61,6 +62,7 @@ public class URLHashCodeAndEqualsCheck extends IssuableSubscriptionVisitor {
     } else if (hasSemantic() && URL_MATCHERS.anyMatch((MethodInvocationTree) tree)) {
       reportIssue(tree, "Use the URI class instead.");
     }
+    });
   }
 
   private static boolean isSubTypeOfSetOrMap(Type type) {

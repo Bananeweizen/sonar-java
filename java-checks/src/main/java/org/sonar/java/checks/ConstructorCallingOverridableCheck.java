@@ -47,6 +47,7 @@ public class ConstructorCallingOverridableCheck extends IssuableSubscriptionVisi
 
   @Override
   public void visitNode(Tree tree) {
+    org.sonar.java.model.JavaTree.useOldSema(context.getTree(), () -> {
     if (hasSemantic()) {
       MethodTree m = (MethodTree) tree;
       Symbol.TypeSymbol constructorType = m.symbol().enclosingClass();
@@ -54,6 +55,7 @@ public class ConstructorCallingOverridableCheck extends IssuableSubscriptionVisi
         ((MethodTree) tree).block().accept(new ConstructorBodyVisitor(constructorType));
       }
     }
+    });
   }
 
   private class ConstructorBodyVisitor extends BaseTreeVisitor {

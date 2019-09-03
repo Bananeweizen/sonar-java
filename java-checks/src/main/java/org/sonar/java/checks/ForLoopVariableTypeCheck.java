@@ -53,6 +53,7 @@ public class ForLoopVariableTypeCheck extends IssuableSubscriptionVisitor {
 
   @Override
   public void visitNode(Tree tree) {
+    org.sonar.java.model.JavaTree.useOldSema(context.getTree(), () -> {
     if (!hasSemantic()) {
       return;
     }
@@ -73,6 +74,7 @@ public class ForLoopVariableTypeCheck extends IssuableSubscriptionVisitor {
           locations, 0);
       }
     }
+    });
   }
 
   @CheckForNull

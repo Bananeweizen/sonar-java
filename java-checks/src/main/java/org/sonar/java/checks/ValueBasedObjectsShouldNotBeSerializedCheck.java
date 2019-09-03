@@ -49,6 +49,7 @@ public class ValueBasedObjectsShouldNotBeSerializedCheck extends IssuableSubscri
 
   @Override
   public void visitNode(Tree tree) {
+    org.sonar.java.model.JavaTree.useOldSema(context.getTree(), () -> {
     ClassTree classTree = (ClassTree) tree;
 
     if (classTree.is(Tree.Kind.ANNOTATION_TYPE)) {
@@ -66,6 +67,7 @@ public class ValueBasedObjectsShouldNotBeSerializedCheck extends IssuableSubscri
         .filter(ValueBasedObjectsShouldNotBeSerializedCheck::isVarSerializableAndValueBased)
         .forEach(var -> reportIssue(var.simpleName(), MESSAGE));
     }
+    });
   }
 
   private static boolean isVarSerializableAndValueBased(VariableTree var) {

@@ -50,6 +50,7 @@ public class SpecializedFunctionalInterfacesCheck extends IssuableSubscriptionVi
 
   @Override
   public void visitNode(Tree tree) {
+    org.sonar.java.model.JavaTree.useOldSema(context.getTree(), () -> {
     if (!hasSemantic()) {
       return;
     }
@@ -58,6 +59,7 @@ public class SpecializedFunctionalInterfacesCheck extends IssuableSubscriptionVi
     } else {
       checkVariableTypeAndInitializer((VariableTree) tree);
     }
+    });
   }
 
   public void checkClassInterfaces(ClassTree tree) {

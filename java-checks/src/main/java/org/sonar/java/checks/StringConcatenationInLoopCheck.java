@@ -51,10 +51,12 @@ public class StringConcatenationInLoopCheck extends BaseTreeVisitor implements J
 
   @Override
   public void scanFile(JavaFileScannerContext context) {
+    org.sonar.java.model.JavaTree.useOldSema(context.getTree(), () -> {
     this.context = context;
     loopLevel.clear();
     semanticModel = (SemanticModel) context.getSemanticModel();
     scan(context.getTree());
+    });
   }
 
   @Override

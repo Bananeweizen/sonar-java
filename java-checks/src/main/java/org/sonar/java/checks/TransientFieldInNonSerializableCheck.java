@@ -45,6 +45,7 @@ public class TransientFieldInNonSerializableCheck extends IssuableSubscriptionVi
 
   @Override
   public void visitNode(Tree tree) {
+    org.sonar.java.model.JavaTree.useOldSema(context.getTree(), () -> {
     ClassTree classTree = (ClassTree) tree;
     if (hasSemantic() && isNotSerializable(classTree.symbol())) {
       for (Tree member : classTree.members()) {
@@ -54,6 +55,7 @@ public class TransientFieldInNonSerializableCheck extends IssuableSubscriptionVi
         }
       }
     }
+    });
   }
 
   private static boolean isNotSerializable(Symbol.TypeSymbol symbol) {

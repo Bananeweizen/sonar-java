@@ -49,8 +49,10 @@ public class RawExceptionCheck extends BaseTreeVisitor implements JavaFileScanne
 
   @Override
   public void scanFile(JavaFileScannerContext context) {
+    org.sonar.java.model.JavaTree.useOldSema(context.getTree(), () -> {
     this.context = context;
     scan(context.getTree());
+    });
   }
 
   @Override

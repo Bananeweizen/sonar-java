@@ -55,6 +55,7 @@ public class ArrayForVarArgCheck extends IssuableSubscriptionVisitor {
 
   @Override
   public void visitNode(Tree tree) {
+    org.sonar.java.model.JavaTree.useOldSema(context.getTree(), () -> {
     Symbol sym;
     Arguments args;
     Tree methodName;
@@ -76,6 +77,7 @@ public class ArrayForVarArgCheck extends IssuableSubscriptionVisitor {
       MethodJavaType methodType = getMethodType(methodSymbol, methodName);
       checkInvokedMethod(methodSymbol, methodType, lastArg);
     }
+    });
   }
 
   @CheckForNull

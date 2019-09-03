@@ -53,11 +53,13 @@ public class BadLocalVariableNameCheck  extends BaseTreeVisitor implements JavaF
 
   @Override
   public void scanFile(JavaFileScannerContext context) {
+    org.sonar.java.model.JavaTree.useOldSema(context.getTree(), () -> {
     if (pattern == null) {
       pattern = Pattern.compile(format, Pattern.DOTALL);
     }
     this.context = context;
     scan(context.getTree());
+    });
   }
 
   @Override

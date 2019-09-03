@@ -53,6 +53,7 @@ public class OptionalAsParameterCheck extends IssuableSubscriptionVisitor {
 
   @Override
   public void visitNode(Tree tree) {
+    org.sonar.java.model.JavaTree.useOldSema(context.getTree(), () -> {
     if (!hasSemantic()) {
       return;
     }
@@ -63,6 +64,7 @@ public class OptionalAsParameterCheck extends IssuableSubscriptionVisitor {
         reportIssue(typeTree, msg.get());
       }
     }
+    });
   }
 
   private static Optional<String> expectedTypeInsteadOfOptional(Type type) {

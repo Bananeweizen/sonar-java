@@ -69,11 +69,13 @@ public class RedundantThrowsDeclarationCheck extends IssuableSubscriptionVisitor
 
   @Override
   public void visitNode(Tree tree) {
+    org.sonar.java.model.JavaTree.useOldSema(context.getTree(), () -> {
     ListTree<TypeTree> thrownList = ((MethodTree) tree).throwsClauses();
     if (!hasSemantic() || thrownList.isEmpty()) {
       return;
     }
     checkMethodThrownList((MethodTree) tree, thrownList);
+    });
   }
 
   private void checkMethodThrownList(MethodTree methodTree, ListTree<TypeTree> thrownList) {

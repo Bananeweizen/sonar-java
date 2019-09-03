@@ -58,6 +58,7 @@ public class ClassWithOnlyStaticMethodsInstantiationCheck extends IssuableSubscr
 
   @Override
   public void visitNode(Tree tree) {
+    org.sonar.java.model.JavaTree.useOldSema(context.getTree(), () -> {
     TypeTree identifier = ((NewClassTree) tree).identifier();
     Symbol.TypeSymbol newClassTypeSymbol = identifier.symbolType().symbol();
     if (!newClassTypeSymbol.isEnum() && hasOnlyStaticMethodsAndFields(newClassTypeSymbol) && !instantiateOwnClass(identifier, newClassTypeSymbol)) {
@@ -68,6 +69,7 @@ public class ClassWithOnlyStaticMethodsInstantiationCheck extends IssuableSubscr
       }
       reportIssue(identifier, MessageFormat.format(message, name));
     }
+    });
   }
 
   private boolean instantiateOwnClass(Tree identifier, Symbol.TypeSymbol newClassTypeSymbol) {

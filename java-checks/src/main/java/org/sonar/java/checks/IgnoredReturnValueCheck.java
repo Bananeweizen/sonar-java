@@ -88,6 +88,7 @@ public class IgnoredReturnValueCheck extends IssuableSubscriptionVisitor {
 
   @Override
   public void visitNode(Tree tree) {
+    org.sonar.java.model.JavaTree.useOldSema(context.getTree(), () -> {
     ExpressionTree expr = ((ExpressionStatementTree) tree).expression();
     if (expr.is(Tree.Kind.METHOD_INVOCATION)) {
       MethodInvocationTree mit = (MethodInvocationTree) expr;
@@ -103,6 +104,7 @@ public class IgnoredReturnValueCheck extends IssuableSubscriptionVisitor {
         reportIssue(methodName, "The return value of \"" + methodName.name() + "\" must be used.");
       }
     }
+    });
   }
 
   private static boolean isExcluded(MethodInvocationTree mit) {

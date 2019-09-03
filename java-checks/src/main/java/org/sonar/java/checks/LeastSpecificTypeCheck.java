@@ -53,6 +53,7 @@ public class LeastSpecificTypeCheck extends IssuableSubscriptionVisitor {
 
   @Override
   public void visitNode(Tree tree) {
+    org.sonar.java.model.JavaTree.useOldSema(context.getTree(), () -> {
     if (!hasSemantic()) {
       return;
     }
@@ -71,6 +72,7 @@ public class LeastSpecificTypeCheck extends IssuableSubscriptionVisitor {
       .filter(p -> p.type().isClass() && !p.type().symbol().isEnum() && !p.type().is("java.lang.String"))
       .filter(p -> !(springInjectionAnnotated && p.type().is("java.util.Collection")))
       .forEach(p -> handleParameter(p, springInjectionAnnotated));
+    });
   }
 
   private static boolean isOverloaded(Symbol.MethodSymbol methodSymbol) {

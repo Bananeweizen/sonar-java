@@ -44,6 +44,7 @@ public class ClassWithoutHashCodeInHashStructureCheck extends IssuableSubscripti
 
   @Override
   public void visitNode(Tree tree) {
+    org.sonar.java.model.JavaTree.useOldSema(context.getTree(), () -> {
     if (!hasSemantic()) {
       return;
     }
@@ -55,6 +56,7 @@ public class ClassWithoutHashCodeInHashStructureCheck extends IssuableSubscripti
         reportIssue(tree, "Add a \"hashCode()\" method to \"" + symbol.name() + "\" or remove it from this hash.");
       }
     }
+    });
   }
 
   private static boolean useHashDataStructure(Type type) {
