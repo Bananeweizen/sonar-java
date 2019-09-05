@@ -93,6 +93,7 @@ public class FileLinesVisitor extends SubscriptionVisitor {
 
   @Override
   public void scanFile(JavaFileScannerContext context) {
+    org.sonar.java.model.JavaTree.useOldSema(context.getTree(), () -> {
     super.scanFile(context);
     InputFile currentFile = context.getInputFile();
     FileLinesContext fileLinesContext = sonarComponents.fileLinesContextFor(currentFile);
@@ -104,6 +105,7 @@ public class FileLinesVisitor extends SubscriptionVisitor {
 
     linesOfCode.clear();
     executableLines.clear();
+    });
   }
 
   @Override

@@ -70,6 +70,7 @@ public class LoopExecutingAtMostOnceCheck extends IssuableSubscriptionVisitor {
 
   @Override
   public void visitNode(Tree tree) {
+    org.sonar.java.model.JavaTree.useOldSema(context.getTree(), () -> {
     Tree parent = tree.parent();
     while (parent.is(Tree.Kind.BLOCK)) {
       parent = parent.parent();
@@ -83,6 +84,7 @@ public class LoopExecutingAtMostOnceCheck extends IssuableSubscriptionVisitor {
       SyntaxToken jumpKeyword = jumpKeyword(tree);
       reportIssue(jumpKeyword, String.format("Remove this \"%s\" statement or make it conditional.", jumpKeyword.text()));
     }
+    });
   }
 
   /**
