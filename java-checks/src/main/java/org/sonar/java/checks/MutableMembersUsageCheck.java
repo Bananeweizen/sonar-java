@@ -70,8 +70,10 @@ public class MutableMembersUsageCheck extends BaseTreeVisitor implements JavaFil
 
   @Override
   public void scanFile(final JavaFileScannerContext context) {
+    org.sonar.java.model.JavaTree.useOldSema(context.getTree(), () -> {
     this.context = context;
     scan(context.getTree());
+    });
   }
 
   @Override
@@ -157,7 +159,7 @@ public class MutableMembersUsageCheck extends BaseTreeVisitor implements JavaFil
     if (symbol.isFinal()) {
       VariableTree declaration = symbol.declaration();
       // symbol is private, so declaration can only be null if assignment is done in static block
-      ExpressionTree initializer = declaration.initializer();
+      ExpressionTree initializer = declaration.initializer(); // FIXME NPE
       if (initializer != null) {
         return !isMutableType(initializer) || isEmptyArray(initializer);
       }
