@@ -40,10 +40,10 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-abstract class JSymbol implements Symbol {
+public abstract class JSymbol implements Symbol {
 
   protected final JSema sema;
-  protected final IBinding binding;
+  public final IBinding binding;
 
   JSymbol(JSema sema, IBinding binding) {
     this.sema = Objects.requireNonNull(sema);

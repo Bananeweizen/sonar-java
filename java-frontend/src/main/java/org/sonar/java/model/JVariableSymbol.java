@@ -25,7 +25,7 @@ import org.sonar.plugins.java.api.tree.VariableTree;
 
 import javax.annotation.Nullable;
 
-final class JVariableSymbol extends JSymbol implements Symbol.VariableSymbol {
+public final class JVariableSymbol extends JSymbol implements Symbol.VariableSymbol {
 
   JVariableSymbol(JSema sema, IVariableBinding variableBinding) {
     super(sema, variableBinding);
