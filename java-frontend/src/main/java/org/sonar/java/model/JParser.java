@@ -232,10 +232,6 @@ import java.util.Map;
 @ParametersAreNonnullByDefault
 public class JParser {
 
-  public static CompilationUnitTree parse(String version, String unitName, String source, List<File> classpath) {
-    return parse(version, unitName, source, false, classpath);
-  }
-
   /**
    * @param unitName see {@link ASTParser#setUnitName(String)}
    * @throws RecognitionException in case of syntax errors
@@ -249,6 +245,7 @@ public class JParser {
   ) {
     ASTParser astParser = ASTParser.newParser(AST.JLS12);
     Map<String, String> options = new HashMap<>();
+    options.put(JavaCore.COMPILER_COMPLIANCE, version);
     options.put(JavaCore.COMPILER_SOURCE, version);
     options.put(JavaCore.COMPILER_PB_ENABLE_PREVIEW_FEATURES, "enabled");
     astParser.setCompilerOptions(options);

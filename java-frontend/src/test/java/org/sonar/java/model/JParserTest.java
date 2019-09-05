@@ -174,7 +174,7 @@ public class JParserTest {
 
   @Test
   public void declaration_package() {
-    test("@Annotation package org.example;");
+    test("package-info.java", "@Annotation package org.example;");
   }
 
   @Test
@@ -325,7 +325,7 @@ public class JParserTest {
   }
 
   private static CompilationUnitTree test(String unitName, String source) {
-    CompilationUnitTree newTree = JParser.parse("12", unitName, source, Collections.emptyList());
+    CompilationUnitTree newTree = JParser.parse("12", unitName, source, true, Collections.emptyList());
     CompilationUnitTree oldTree = (CompilationUnitTree) JavaParser.createParser().parse(source);
     TreeFormatter.compare(oldTree, newTree);
     return newTree;
