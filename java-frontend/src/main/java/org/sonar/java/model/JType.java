@@ -42,9 +42,12 @@ final class JType implements Type, Type.ArrayType {
 
   @Override
   public boolean isSubtypeOf(String fullyQualifiedName) {
-    return typeBinding.isSubTypeCompatible(
-      sema.resolveType(fullyQualifiedName)
-    );
+    ITypeBinding type = sema.resolveType(fullyQualifiedName);
+    // FIXME prevents NPE when typeBinding is recovered
+    if (type == null) {
+      return false;
+    }
+    return typeBinding.isSubTypeCompatible(type);
   }
 
   @Override
