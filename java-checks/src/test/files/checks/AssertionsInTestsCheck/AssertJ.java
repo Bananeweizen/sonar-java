@@ -209,7 +209,8 @@ public abstract class AssertionsInTestsCheckAssertJ {
 
   @Test
   public void bdd_assertions_split_with_intermediate_assertion() { // Compliant
-    AbstractListAssert<?, ? extends List<? extends String>, String> thenResult = BDDAssertions.then(listStringMethod());
+//// Incorrect number of arguments for type AbstractListAssert<SELF,ACTUAL,ELEMENT,ELEMENT_ASSERT>; it cannot be parameterized with arguments <?, ? extends List<? extends String>, String
+    AbstractListAssert<?, ? extends List<? extends String>, String, ?> thenResult = BDDAssertions.then(listStringMethod());
     thenResult
       .contains("Bob", "Alice")
       .doesNotContain("Maurice");

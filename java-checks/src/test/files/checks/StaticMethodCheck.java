@@ -128,8 +128,9 @@ class Utilities {
         primitiveType = BOOLEAN_TYPE;
     }
   }
-  
-  private <T> int sizeOfMap(Map<T> map) { // Noncompliant
+
+//// Incorrect number of arguments for type Map<K,V>; it cannot be parameterized with arguments <T>
+  private <T> int sizeOfMap(Map<T, ?> map) { // Noncompliant
     return map.size();
   }
   

@@ -11,7 +11,8 @@ class A {
   }
 
   @SuppressWarnings("all") // WithIssue
-  class A {
+//// The nested type A cannot hide an enclosing type
+  class AA {
     private static final int bad_constant_name = 42; // NoIssue
 
     private String s; // NoIssue

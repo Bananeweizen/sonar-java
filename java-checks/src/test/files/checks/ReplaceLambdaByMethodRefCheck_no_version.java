@@ -1,4 +1,6 @@
 import java.util.Arrays;
+//// IntStream cannot be resolved
+import java.util.stream.IntStream;
 
 class A {
   void fun() {
