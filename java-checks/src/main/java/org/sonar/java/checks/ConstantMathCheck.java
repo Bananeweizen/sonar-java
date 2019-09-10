@@ -98,7 +98,6 @@ public class ConstantMathCheck extends IssuableSubscriptionVisitor {
 
   @Override
   public void visitNode(Tree tree) {
-    org.sonar.java.model.JavaTree.useOldSema(context.getTree(), () -> {
     if (hasSemantic()) {
       if (tree.is(Tree.Kind.REMAINDER)) {
         BinaryExpressionTree remainderTree = (BinaryExpressionTree) tree;
@@ -112,7 +111,6 @@ public class ConstantMathCheck extends IssuableSubscriptionVisitor {
         }
       }
     }
-    });
   }
 
   private static boolean isIntOrLong(ExpressionTree expression) {

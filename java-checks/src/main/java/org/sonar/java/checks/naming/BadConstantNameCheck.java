@@ -65,7 +65,6 @@ public class BadConstantNameCheck extends IssuableSubscriptionVisitor {
 
   @Override
   public void visitNode(Tree tree) {
-    org.sonar.java.model.JavaTree.useOldSema(tree, () -> {
     ClassTree classTree = (ClassTree) tree;
     for (Tree member : classTree.members()) {
       if (member.is(Tree.Kind.VARIABLE) && hasSemantic()) {
@@ -78,7 +77,6 @@ public class BadConstantNameCheck extends IssuableSubscriptionVisitor {
         checkName((VariableTree) member);
       }
     }
-    });
   }
 
   private static boolean isConstantType(Type symbolType) {

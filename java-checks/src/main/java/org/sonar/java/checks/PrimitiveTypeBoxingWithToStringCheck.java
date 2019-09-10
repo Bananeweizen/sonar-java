@@ -52,10 +52,8 @@ public class PrimitiveTypeBoxingWithToStringCheck extends BaseTreeVisitor implem
 
   @Override
   public void scanFile(JavaFileScannerContext context) {
-    org.sonar.java.model.JavaTree.useOldSema(context.getTree(), () -> {
     this.context = context;
     scan(context.getTree());
-    });
   }
 
   private static MethodMatcherCollection getToStringMatchers(String... typeFullyQualifiedNames) {
