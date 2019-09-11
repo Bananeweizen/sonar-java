@@ -40,11 +40,9 @@ public abstract class AbstractSerializableInnerClassRule extends IssuableSubscri
 
   @Override
   public void visitNode(Tree tree) {
-    org.sonar.java.model.JavaTree.useOldSema(context.getTree(), () -> {
     if (hasSemantic()) {
       visitClassTree((ClassTree) tree);
     }
-    });
   }
 
   private void visitClassTree(ClassTree classTree) {

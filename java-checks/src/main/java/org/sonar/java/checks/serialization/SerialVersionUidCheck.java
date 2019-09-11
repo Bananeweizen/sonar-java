@@ -48,11 +48,9 @@ public class SerialVersionUidCheck extends IssuableSubscriptionVisitor {
 
   @Override
   public void visitNode(Tree tree) {
-    org.sonar.java.model.JavaTree.useOldSema(tree, () -> {
     if (hasSemantic()) {
       visitClassTree((ClassTree) tree);
     }
-    });
   }
 
   private void visitClassTree(ClassTree classTree) {
