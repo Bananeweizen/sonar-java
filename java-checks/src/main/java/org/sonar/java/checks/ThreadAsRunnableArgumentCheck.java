@@ -45,7 +45,6 @@ public class ThreadAsRunnableArgumentCheck extends IssuableSubscriptionVisitor {
 
   @Override
   public void visitNode(Tree tree) {
-    org.sonar.java.model.JavaTree.useOldSema(context.getTree(), () -> {
     if (!hasSemantic()) {
       return;
     }
@@ -63,7 +62,6 @@ public class ThreadAsRunnableArgumentCheck extends IssuableSubscriptionVisitor {
     if (!arguments.isEmpty() && methodSymbol.isMethodSymbol()) {
       checkArgumentsTypes(arguments, (Symbol.MethodSymbol) methodSymbol);
     }
-    });
   }
 
   private void checkArgumentsTypes(List<ExpressionTree> arguments, Symbol.MethodSymbol methodSymbol) {

@@ -67,14 +67,12 @@ public class CallOuterPrivateMethodCheck extends IssuableSubscriptionVisitor {
 
   @Override
   public void visitNode(Tree tree) {
-    org.sonar.java.model.JavaTree.useOldSema(context.getTree(), () -> {
     ClassTree classTree = (ClassTree) tree;
     Symbol.TypeSymbol classSymbol = classTree.symbol();
     if (isInnerClass(classSymbol)) {
       methodInvocationVisitor.setClassSymbol(classSymbol);
       classTree.accept(methodInvocationVisitor);
     }
-    });
   }
 
   private static boolean isInnerClass(Symbol symbol) {
