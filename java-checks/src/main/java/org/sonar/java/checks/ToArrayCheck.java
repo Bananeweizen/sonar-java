@@ -39,13 +39,6 @@ public class ToArrayCheck extends AbstractMethodDetection {
     .name("toArray").withoutParameter();
 
   @Override
-  public void visitNode(Tree tree) {
-    org.sonar.java.model.JavaTree.useOldSema(context.getTree(), () -> {
-      super.visitNode(tree);
-    });
-  }
-
-  @Override
   protected List<MethodMatcher> getMethodInvocationMatchers() {
     return Collections.singletonList(COLLECTION_TO_ARRAY);
   }
