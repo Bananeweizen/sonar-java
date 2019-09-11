@@ -43,13 +43,6 @@ public class SillyEqualsCheck extends AbstractMethodDetection {
   private static final String MESSAGE = "Remove this call to \"equals\"; comparisons between unrelated types always return false.";
 
   @Override
-  public void visitNode(Tree tree) {
-    org.sonar.java.model.JavaTree.useOldSema(context.getTree(), () -> {
-      super.visitNode(tree);
-    });
-  }
-
-  @Override
   protected List<MethodMatcher> getMethodInvocationMatchers() {
     return Collections.singletonList(MethodMatcher.create()
       .name("equals")
