@@ -37,12 +37,10 @@ public abstract class CompareWithEqualsVisitor extends BaseTreeVisitor implement
 
   @Override
   public void scanFile(JavaFileScannerContext context) {
-    org.sonar.java.model.JavaTree.useOldSema(context.getTree(), () -> {
     this.context = context;
     if (context.getSemanticModel() != null) {
       scan(context.getTree());
     }
-    });
   }
 
   @Override
