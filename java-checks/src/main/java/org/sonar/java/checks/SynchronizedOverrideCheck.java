@@ -42,7 +42,6 @@ public class SynchronizedOverrideCheck extends IssuableSubscriptionVisitor {
 
   @Override
   public void visitNode(Tree tree) {
-    org.sonar.java.model.JavaTree.useOldSema(context.getTree(), () -> {
     if (!hasSemantic()) {
       return;
     }
@@ -61,7 +60,6 @@ public class SynchronizedOverrideCheck extends IssuableSubscriptionVisitor {
       }
       reportIssue(methodTree.simpleName(), MESSAGE, secondaries, null);
     }
-    });
   }
 
 }
