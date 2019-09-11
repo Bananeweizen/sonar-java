@@ -73,7 +73,6 @@ public class UnusedMethodParameterCheck extends IssuableSubscriptionVisitor {
 
   @Override
   public void visitNode(Tree tree) {
-    org.sonar.java.model.JavaTree.useOldSema(context.getTree(), () -> {
     if (!hasSemantic()) {
       return;
     }
@@ -101,7 +100,6 @@ public class UnusedMethodParameterCheck extends IssuableSubscriptionVisitor {
     if (!unused.isEmpty()) {
       reportUnusedParameters(unused);
     }
-    });
   }
 
   private void reportUnusedParameters(List<IdentifierTree> unused) {
