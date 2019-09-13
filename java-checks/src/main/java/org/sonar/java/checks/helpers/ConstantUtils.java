@@ -20,6 +20,9 @@
 package org.sonar.java.checks.helpers;
 
 import javax.annotation.CheckForNull;
+
+import org.eclipse.jdt.core.dom.IVariableBinding;
+import org.sonar.java.model.JVariableSymbol;
 import org.sonar.java.model.LiteralUtils;
 import org.sonar.java.resolve.JavaSymbol;
 import org.sonar.plugins.java.api.semantic.Symbol;
@@ -110,6 +113,11 @@ public class ConstantUtils {
         return Boolean.FALSE;
       }
     }
+
+    if (symbol instanceof JVariableSymbol) {
+      return ((IVariableBinding) ((JVariableSymbol) symbol).binding).getConstantValue();
+    }
+
     return ((JavaSymbol.VariableJavaSymbol) symbol).constantValue().orElse(null);
   }
 

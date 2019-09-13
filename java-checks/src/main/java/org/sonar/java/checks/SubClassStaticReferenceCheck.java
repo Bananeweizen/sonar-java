@@ -47,6 +47,7 @@ public class SubClassStaticReferenceCheck extends IssuableSubscriptionVisitor {
 
   @Override
   public void visitNode(Tree tree) {
+    org.sonar.java.model.JavaTree.useOldSema(context.getTree(), () -> {
     if (!hasSemantic()) {
       return;
     }
@@ -59,6 +60,7 @@ public class SubClassStaticReferenceCheck extends IssuableSubscriptionVisitor {
     // declared in the class.
     checkStaticVariables(members, classType);
     checkStaticInitializers(members, classType);
+    });
   }
 
   private void checkStaticVariables(List<Tree> members, Type classType) {

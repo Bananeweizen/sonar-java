@@ -51,6 +51,7 @@ public class UnusedTypeParameterCheck extends IssuableSubscriptionVisitor {
 
   @Override
   public void visitNode(Tree tree) {
+    org.sonar.java.model.JavaTree.useOldSema(context.getTree(), () -> {
     if (hasSemantic()) {
       TypeParameters typeParameters;
       String messageEnd;
@@ -74,5 +75,6 @@ public class UnusedTypeParameterCheck extends IssuableSubscriptionVisitor {
         }
       }
     }
+    });
   }
 }

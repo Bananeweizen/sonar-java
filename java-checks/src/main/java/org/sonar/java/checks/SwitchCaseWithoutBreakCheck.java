@@ -49,6 +49,7 @@ public class SwitchCaseWithoutBreakCheck extends IssuableSubscriptionVisitor {
 
   @Override
   public void visitNode(Tree tree) {
+    org.sonar.java.model.JavaTree.useOldSema(context.getTree(), () -> {
     SwitchStatementTree switchStatementTree = (SwitchStatementTree) tree;
     List<CaseGroupTree> caseGroupTrees = switchStatementTree.cases();
     CFG cfg = CFG.buildCFG(Collections.singletonList(tree), true);
@@ -61,6 +62,7 @@ public class SwitchCaseWithoutBreakCheck extends IssuableSubscriptionVisitor {
       .map(CaseGroupTree::labels)
       .map(caseGroupLabels -> caseGroupLabels.get(caseGroupLabels.size() - 1))
       .forEach(label -> reportIssue(label, "End this switch case with an unconditional break, return or throw statement."));
+    });
   }
 
   private static Map<CFG.Block, CaseGroupTree> createMapping(Set<CFG.Block> switchSuccessors, List<CaseGroupTree> caseGroupTrees) {

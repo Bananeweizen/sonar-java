@@ -11,11 +11,13 @@ class OverridesEquals {
   private void equals() {
   }
 
-  private void equals(Object o) { // Compliant - methods cannot differ only by return type
-  }
+////  Duplicate method equals(Object) in type OverridesEquals
+//  private void equals(Object o) { // Compliant - methods cannot differ only by return type
+//  }
 
-  private void equals(java.lang.Object o) { // Compliant
-  }
+//// Duplicate method equals(Object) in type OverridesEquals
+//  private void equals(java.lang.Object o) { // Compliant
+//  }
 
   private boolean equals() {
   }
@@ -23,8 +25,9 @@ class OverridesEquals {
   private boolean equals(Object o1, Object o2) {
   }
 
-  private boolean equals(Object foobar) { // Compliant
-  }
+//// Duplicate method equals(Object) in type OverridesEquals
+//  private boolean equals(Object foobar) { // Compliant
+//  }
 
   private boolean equals(int a) {
   }

@@ -69,7 +69,8 @@ class ClassA {
   }
 
   @Deprecated
-  public Optional<String> doSomething5(List<String> myList) {
+//// List cannot be resolved to a type
+  public Optional<String> doSomething5(java.util.List<String> myList) {
     return myList.isEmpty() ? Optional.of("hello") : null; // Noncompliant [[sc=54;ec=58]] {{Methods with an "Optional" return type should never return null.}}
   }
 

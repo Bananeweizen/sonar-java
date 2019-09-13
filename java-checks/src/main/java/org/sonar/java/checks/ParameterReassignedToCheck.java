@@ -49,11 +49,13 @@ public class ParameterReassignedToCheck extends BaseTreeVisitor implements JavaF
 
   @Override
   public void scanFile(final JavaFileScannerContext context) {
+    org.sonar.java.model.JavaTree.useOldSema(context.getTree(), () -> {
     this.context = context;
     variables.clear();
     if (context.getSemanticModel() != null) {
       scan(context.getTree());
     }
+    });
   }
 
   @Override

@@ -50,6 +50,7 @@ public class SimpleClassNameCheck extends IssuableSubscriptionVisitor {
 
   @Override
   public void visitNode(Tree tree) {
+    org.sonar.java.model.JavaTree.useOldSema(context.getTree(), () -> {
     if (!hasSemantic()) {
       return;
     }
@@ -63,6 +64,7 @@ public class SimpleClassNameCheck extends IssuableSubscriptionVisitor {
     if(!fileContainsStarImport) {
       checkImports(imports);
     }
+    });
   }
 
   private void checkImports(List<ImportTree> imports) {

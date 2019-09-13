@@ -58,6 +58,8 @@ public class UselessImportCheck extends BaseTreeVisitor implements JavaFileScann
 
   @Override
   public void scanFile(JavaFileScannerContext context) {
+    org.sonar.java.model.JavaTree.useOldSema(context.getTree(), () -> {
+
     this.context = context;
     CompilationUnitTree cut = context.getTree();
 
@@ -93,6 +95,7 @@ public class UselessImportCheck extends BaseTreeVisitor implements JavaFileScann
     //check references from comments.
     new CommentVisitor().checkImportsFromComments(cut, pendingImports);
     leaveFile();
+    });
   }
 
   private void reportIssue(ImportTree importTree) {

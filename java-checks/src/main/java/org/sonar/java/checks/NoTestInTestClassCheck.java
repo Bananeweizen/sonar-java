@@ -54,11 +54,13 @@ public class NoTestInTestClassCheck extends IssuableSubscriptionVisitor {
 
   @Override
   public void visitNode(Tree tree) {
+    org.sonar.java.model.JavaTree.useOldSema(context.getTree(), () -> {
     if (hasSemantic()) {
       resetAnnotationCache();
       CompilationUnitTree cut = (CompilationUnitTree) tree;
       cut.types().stream().filter(typeTree -> typeTree.is(Kind.CLASS)).forEach(typeTree -> checkClass((ClassTree) typeTree));
     }
+    });
   }
 
   private void resetAnnotationCache() {

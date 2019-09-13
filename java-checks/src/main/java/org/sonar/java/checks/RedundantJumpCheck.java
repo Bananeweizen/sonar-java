@@ -41,11 +41,13 @@ public class RedundantJumpCheck extends IssuableSubscriptionVisitor {
 
   @Override
   public void visitNode(Tree tree) {
+    org.sonar.java.model.JavaTree.useOldSema(context.getTree(), () -> {
     MethodTree methodTree = (MethodTree) tree;
     if (methodTree.block() != null) {
       CFG cfg = CFG.build(methodTree);
       cfg.blocks().forEach(this::checkBlock);
     }
+    });
   }
 
   private void checkBlock(Block block) {

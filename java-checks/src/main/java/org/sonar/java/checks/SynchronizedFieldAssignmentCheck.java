@@ -47,6 +47,7 @@ public class SynchronizedFieldAssignmentCheck extends IssuableSubscriptionVisito
 
   @Override
   public void visitNode(Tree tree) {
+    org.sonar.java.model.JavaTree.useOldSema(context.getTree(), () -> {
     if (!hasSemantic()) {
       return;
     }
@@ -64,6 +65,7 @@ public class SynchronizedFieldAssignmentCheck extends IssuableSubscriptionVisito
         reportIssue(tree, String.format("\"%s\" is a method parameter, and should not be used for synchronization.", parameter.name()));
       }
     }
+    });
   }
 
   @CheckForNull

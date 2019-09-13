@@ -62,6 +62,7 @@ public class DeadStoreCheck extends IssuableSubscriptionVisitor {
 
   @Override
   public void visitNode(Tree tree) {
+    org.sonar.java.model.JavaTree.useOldSema(context.getTree(), () -> {
     if (!hasSemantic()) {
       return;
     }
@@ -82,6 +83,7 @@ public class DeadStoreCheck extends IssuableSubscriptionVisitor {
     for (CFG.Block block : cfg.blocks()) {
       checkElements(block, liveVariables.getOut(block), methodSymbol);
     }
+    });
   }
 
   private void checkElements(CFG.Block block, Set<Symbol> blockOut, Symbol.MethodSymbol methodSymbol) {

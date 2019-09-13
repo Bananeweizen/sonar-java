@@ -48,8 +48,10 @@ public class EnumMapCheck extends BaseTreeVisitor implements JavaFileScanner {
 
   @Override
   public void scanFile(final JavaFileScannerContext context) {
+    org.sonar.java.model.JavaTree.useOldSema(context.getTree(), () -> {
     this.context = context;
     scan(context.getTree());
+    });
   }
 
   @Override

@@ -54,6 +54,7 @@ public class IteratorNextExceptionCheck extends IssuableSubscriptionVisitor {
 
   @Override
   public void visitNode(Tree tree) {
+    org.sonar.java.model.JavaTree.useOldSema(context.getTree(), () -> {
     MethodTree methodTree = (MethodTree) tree;
     if (hasSemantic() && isIteratorNextMethod(methodTree.symbol()) && methodTree.block() != null) {
       NextMethodBodyVisitor visitor = new NextMethodBodyVisitor();
@@ -62,6 +63,7 @@ public class IteratorNextExceptionCheck extends IssuableSubscriptionVisitor {
         reportIssue(methodTree.simpleName(), "Add a \"NoSuchElementException\" for iteration beyond the end of the collection.");
       }
     }
+    });
   }
 
   private static boolean isIteratorNextMethod(Symbol.MethodSymbol symbol) {

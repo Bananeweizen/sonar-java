@@ -128,17 +128,22 @@ public class VisitorsBridge {
     if (fileParsed && parsedTree.is(Tree.Kind.COMPILATION_UNIT)) {
       tree = (CompilationUnitTree) parsedTree;
       if (isNotJavaLangOrSerializable(PackageUtils.packageName(tree.packageDeclaration(), "/"))) {
+        final boolean oldValue = ((JavaTree.CompilationUnitTreeImpl) tree).useNewSema;
         try {
+          ((JavaTree.CompilationUnitTreeImpl) tree).useNewSema = false;
           semanticModel = SemanticModel.createFor(tree, classLoader);
         } catch (Exception e) {
           LOG.error(String.format("Unable to create symbol table for : '%s'", currentFile), e);
           addAnalysisError(e, currentFile, AnalysisError.Kind.SEMANTIC_ERROR);
           sonarComponents.reportAnalysisError(currentFile, e.getMessage());
           return;
+        } finally {
+          ((JavaTree.CompilationUnitTreeImpl) tree).useNewSema = oldValue;
         }
         createSonarSymbolTable(tree);
       } else {
         SemanticModel.handleMissingTypes(tree);
+        ((JavaTree.CompilationUnitTreeImpl) tree).useNewSema = false;
       }
     }
     JavaFileScannerContext javaFileScannerContext = createScannerContext(tree, semanticModel, sonarComponents, fileParsed);

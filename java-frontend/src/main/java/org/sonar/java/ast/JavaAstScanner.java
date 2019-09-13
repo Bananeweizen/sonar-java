@@ -80,6 +80,9 @@ public class JavaAstScanner {
     return sonarComponents != null && sonarComponents.analysisCancelled();
   }
 
+  @VisibleForTesting
+  public boolean resolveBindings;
+
   private void simpleScan(InputFile inputFile) {
     visitor.setCurrentFile(inputFile);
     try {
@@ -94,8 +97,10 @@ public class JavaAstScanner {
         version,
         inputFile.filename(),
         fileContent,
+        resolveBindings,
         visitor.getClasspath()
       );
+      ((org.sonar.java.model.JavaTree.CompilationUnitTreeImpl) ast).useNewSema = resolveBindings;
       visitor.visitFile(ast);
     } catch (RecognitionException e) {
       checkInterrupted(e);

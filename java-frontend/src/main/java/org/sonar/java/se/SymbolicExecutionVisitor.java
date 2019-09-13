@@ -61,7 +61,9 @@ public class SymbolicExecutionVisitor extends SubscriptionVisitor {
 
   @Override
   public void visitNode(Tree tree) {
+    org.sonar.java.model.JavaTree.useOldSema(context.getTree(), () -> {
     execute((MethodTree) tree);
+    });
   }
 
   public void execute(MethodTree methodTree) {

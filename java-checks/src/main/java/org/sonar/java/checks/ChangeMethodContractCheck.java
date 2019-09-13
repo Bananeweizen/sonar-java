@@ -45,6 +45,7 @@ public class ChangeMethodContractCheck extends IssuableSubscriptionVisitor {
 
   @Override
   public void visitNode(Tree tree) {
+    org.sonar.java.model.JavaTree.useOldSema(context.getTree(), () -> {
     if(!hasSemantic()) {
       return;
     }
@@ -54,6 +55,7 @@ public class ChangeMethodContractCheck extends IssuableSubscriptionVisitor {
     if (overridee != null && overridee.isMethodSymbol()) {
       checkContractChange(methodTree, overridee);
     }
+    });
   }
 
   private void checkContractChange(MethodTree methodTree, Symbol.MethodSymbol overridee) {

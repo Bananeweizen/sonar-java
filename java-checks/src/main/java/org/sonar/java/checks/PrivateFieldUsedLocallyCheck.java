@@ -59,6 +59,7 @@ public class PrivateFieldUsedLocallyCheck extends IssuableSubscriptionVisitor {
 
   @Override
   public void visitNode(Tree tree) {
+    org.sonar.java.model.JavaTree.useOldSema(context.getTree(), () -> {
     TypeSymbol classSymbol = ((ClassTree) tree).symbol();
     Set<Symbol> fieldsReadOnAnotherInstance = FieldsReadOnAnotherInstanceVisitor.getFrom(tree);
 
@@ -69,6 +70,7 @@ public class PrivateFieldUsedLocallyCheck extends IssuableSubscriptionVisitor {
       .filter(s -> !s.usages().isEmpty())
       .filter(s -> !fieldsReadOnAnotherInstance.contains(s))
       .forEach(s -> checkPrivateField(s, classSymbol));
+    });
   }
 
   private static boolean hasAnnotation(Symbol s) {

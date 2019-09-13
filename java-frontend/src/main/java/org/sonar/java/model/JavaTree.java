@@ -57,6 +57,16 @@ import org.sonar.sslr.grammar.GrammarRuleKey;
 
 public abstract class JavaTree implements Tree {
 
+  public static void useOldSema(Tree tree, Runnable runnable) {
+    boolean oldValue = (((JavaTree) tree).root).useNewSema;
+    try {
+      (((JavaTree) tree).root).useNewSema = false;
+      runnable.run();
+    } finally {
+      (((JavaTree) tree).root).useNewSema = oldValue;
+    }
+  }
+
   protected CompilationUnitTreeImpl root;
 
   @Nullable

@@ -48,6 +48,7 @@ public class AnnotationDefaultArgumentCheck extends IssuableSubscriptionVisitor 
 
   @Override
   public void visitNode(Tree tree) {
+    org.sonar.java.model.JavaTree.useOldSema(context.getTree(), () -> {
     AnnotationTree annotationTree = (AnnotationTree) tree;
     TypeSymbol annotationSymbol = annotationTree.symbolType().symbol();
     if (annotationSymbol.isUnknown()) {
@@ -74,6 +75,7 @@ public class AnnotationDefaultArgumentCheck extends IssuableSubscriptionVisitor 
         reportIssue(argument, String.format("Remove this default value assigned to parameter \"%s\".", paramName));
       }
     }
+    });
   }
 
   private static boolean setValueIsSameAsDefaultValue(@Nullable Object defaultValue, Tree valueSet) {

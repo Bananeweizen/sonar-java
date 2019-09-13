@@ -42,6 +42,7 @@ public class AnnotationArgumentOrderCheck extends IssuableSubscriptionVisitor {
 
   @Override
   public void visitNode(Tree tree) {
+    org.sonar.java.model.JavaTree.useOldSema(context.getTree(), () -> {
     AnnotationTree annotationTree = (AnnotationTree) tree;
     TypeSymbol annotationSymbol = annotationTree.symbolType().symbol();
     if (annotationSymbol.isUnknown()) {
@@ -63,6 +64,7 @@ public class AnnotationArgumentOrderCheck extends IssuableSubscriptionVisitor {
     if (!declarationNames.equals(annotationArguments)) {
       reportIssue(annotationTree.annotationType(), "Reorder annotation arguments to match the order of declaration.");
     }
+    });
   }
 
 }
